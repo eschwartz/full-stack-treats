@@ -6,7 +6,6 @@
       build:
         name: Test Run
         runs-on: ubuntu-latest
-        container: node:10.18-jessie
         
         # https://docs.github.com/en/free-pro-team@latest/actions/guides/creating-postgresql-service-containers#introduction
         # Service containers to run with `build`
@@ -16,26 +15,21 @@
             # Docker Hub image
             # https://hub.docker.com/_/postgres
             image: postgres
-            env:
-              POSTGRES_USER: postgres
-              POSTGRES_PASSWORD: postgres
             # Set health checks to wait until postgres has started
             options: >-
               --health-cmd pg_isready
               --health-interval 10s
               --health-timeout 5s
               --health-retries 5
+            ports:
+              - 5432:5432
 
 
         steps:
+          - name: createdb test
+            run: createdb testtesttest
           - name: Checkout repo code
             uses: actions/checkout@v2
           - name: Install dependencies
             run: npm ci
           - run: npm test
-            env:
-              # See https://www.postgresql.org/docs/9.1/libpq-envars.html
-              PGHOST: postgres
-              PGPORT: 5432
-              PGUSER: postgres
-              PGPASSWORD: postgres
