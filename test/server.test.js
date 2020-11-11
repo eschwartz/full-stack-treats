@@ -15,7 +15,7 @@ beforeAll(async() => {
   const sql = fs.readFileSync(sqlPath, 'utf8');
 
   // Update the app's pool, to connect to our test database
-  // pool.options.host = process.env.PGHOST || 'localhost';
+  pool.options.host = process.env.PGHOST || 'localhost';
   // pool.options.user = process.env.PGUSER || undefined;
   // pool.options.password = process.env.PGPASSWORD || undefined;
   // pool.options.port = process.env.PGPORT || undefined;
