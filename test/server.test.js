@@ -20,6 +20,7 @@ beforeAll(async() => {
   pool.options.password = process.env.PGPASSWORD || undefined;
   pool.options.port = process.env.PGPORT || undefined;
   pool.options.database = process.env.TEST_DB;
+  console.log('pool options', pool.options);
   pool.connect();
   await pool.query(sql);
   console.log(`Executing treats.sql.... done.`);

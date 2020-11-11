@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-env
-
 timestamp=$(date +%s)
 testDb="full-stack-treats-test-${timestamp}"
 
