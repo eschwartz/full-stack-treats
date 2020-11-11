@@ -13,8 +13,10 @@
           # Label used to access the service container
           postgres:
             # Docker Hub image
+            # https://hub.docker.com/_/postgres
             image: postgres
             env:
+              POSTGRES_USER: postgres
               POSTGRES_PASSWORD: postgres
             # Set health checks to wait until postgres has started
             options: >-
@@ -33,5 +35,8 @@
           - run: npm ci
           - run: npm test
             env:
+              # See https://www.postgresql.org/docs/9.1/libpq-envars.html
               PGHOST: postgres
               PGPORT: 5432
+              PGUSER: postgres
+              PGPASSWORD: postgres
