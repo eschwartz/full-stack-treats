@@ -32,3 +32,6 @@
               node-version: ${{ matrix.node-version }}
           - run: npm ci
           - run: npm test
+            env:
+              PGHOST: postgres
+              PGPORT: 5432
