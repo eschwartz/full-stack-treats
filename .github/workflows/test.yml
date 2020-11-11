@@ -6,6 +6,7 @@
       build:
         name: Test Run
         runs-on: ubuntu-latest
+        container: node:10.18-jessie
         
         # https://docs.github.com/en/free-pro-team@latest/actions/guides/creating-postgresql-service-containers#introduction
         # Service containers to run with `build`
@@ -27,12 +28,10 @@
 
 
         steps:
-          - uses: actions/checkout@v2
-          - name: Use Node.js ${{ matrix.node-version }}
-            uses: actions/setup-node@v1
-            with:
-              node-version: ${{ matrix.node-version }}
-          - run: npm ci
+          - name: Checkout repo code
+            uses: actions/checkout@v2
+          - name: Install dependencies
+            run: npm ci
           - run: npm test
             env:
               # See https://www.postgresql.org/docs/9.1/libpq-envars.html
