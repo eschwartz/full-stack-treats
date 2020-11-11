@@ -16,6 +16,7 @@
             # https://hub.docker.com/_/postgres
             image: postgres
             env:
+              POSTGRES_USER: postgres
               POSTGRES_PASSWORD: postgres
             # Set health checks to wait until postgres has started
             options: >-
@@ -31,6 +32,9 @@
           - name: createdb test
             run: createdb testtesttest
             env:
+              PGHOST: localhost
+              PGPORT: 5432
+              PGUSER: postgres
               PGPASSWORD: postgres
           - name: Checkout repo code
             uses: actions/checkout@v2
