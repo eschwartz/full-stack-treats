@@ -1,0 +1,32 @@
+    name: Test
+
+    on: [push]
+
+    jobs:
+      build:
+        name: Test Run
+        runs-on: ubuntu-latest
+        
+        # https://docs.github.com/en/free-pro-team@latest/actions/guides/creating-postgresql-service-containers#introduction
+        # Service containers to run with `build`
+        services:
+          # Label used to access the service container
+          postgres:
+            # Docker Hub image
+            image: postgres
+            # Set health checks to wait until postgres has started
+            options: >-
+              --health-cmd pg_isready
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
+
+
+        steps:
+          - uses: actions/checkout@v2
+          - name: Use Node.js ${{ matrix.node-version }}
+            uses: actions/setup-node@v1
+            with:
+              node-version: ${{ matrix.node-version }}
+          - run: npm ci
+          - run: npm test
