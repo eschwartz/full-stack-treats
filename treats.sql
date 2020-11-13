@@ -8,5 +8,5 @@ CREATE TABLE treats (
 );
 
 INSERT INTO treats (name, description, pic)
-VALUES ('Cupcake', 'A delicious cupcake', '/assets/cupcake.jpg'),
+VALUES ('Cupcake', 'A fantastic cupcake', '/assets/cupcake.jpg'),
 ('Donuts', 'Mmmm donuts', '/assets/donuts.jpg');
