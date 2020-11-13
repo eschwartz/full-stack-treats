@@ -37,7 +37,7 @@ describe('GET /treats', () => {
 
   it('should return treats from the database', async() => {
     let res = await agent.get('/treats');
-    expect(res.statusCode, 'GET /treats should return a 200').toBe(200);
+    expect(res.statusCode, 'GET /treats should return a 200').toBe(124);
     expect(res.body, 'GET /treats should return data from the DB').toMatchObject([
       { 
         id: 1,
