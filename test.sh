@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 
 timestamp=$(date +%s)
 testDb="full-stack-treats-test-${timestamp}"
+
+
+function dropTestDb {
+  echo "Dropping DB ${testDb}..."
+  dropdb ${testDb}
+}
+
+trap dropTestDb EXIT
 
 echo "Creating DB ${testDb}..."
 createdb ${testDb}
@@ -24,7 +34,5 @@ echo "CI? $CI";
   echo "::warning::All tests passed! Great work!"
 #fi
 
-echo "Dropping DB ${testDb}..."
-dropdb ${testDb}
 
 echo "Testing complete!"
