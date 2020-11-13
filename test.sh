@@ -11,14 +11,16 @@ echo "Running tests...."
 # https://github.com/cschleiden/jest-github-actions-reporter
 
 TEST_DB=${testDb} \
-CI=true \
   ./node_modules/.bin/jest \
     --forceExit \
     --runInBand \
     --testTimeout=8000 \
     --reporters=default --reporters=jest-github-actions-reporter
-open ./test-report.html
 echo "Tests complete."
+
+if [[ -n "$CI" ]]; then
+  echo "::debug::All tests passed! Great work!"
+fi
 
 echo "Dropping DB ${testDb}..."
 dropdb ${testDb}

@@ -42,6 +42,7 @@
             run: npm ci
           - run: npm test
             env:
+              CI: true
               PGHOST: localhost
               PGPORT: 5432
               PGUSER: postgres
