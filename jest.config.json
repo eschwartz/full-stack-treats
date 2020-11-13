@@ -4,6 +4,5 @@
     "jest-github-actions-reporter"
   ],
   "testLocationInResults": true,
-  "setupFilesAfterEnv": ["jest-expect-message"],
-  "preset": "jest-runner-prettier"
+  "setupFilesAfterEnv": ["jest-expect-message"]
 }

@@ -47,3 +47,6 @@
               PGPORT: 5432
               PGUSER: postgres
               PGPASSWORD: postgres
+          - run: npm test-prettier
+            env:
+              CI: true

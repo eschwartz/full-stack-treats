@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "./test.sh"
+    "test": "./test.sh",
+    "test-prettier": "jest --preset=jest-runner-prettier"
   },
   "author": "instructors@primeacademy.io",
   "license": "ISC",
