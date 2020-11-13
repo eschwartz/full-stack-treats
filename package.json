@@ -16,5 +16,8 @@
     "jest-html-reporter": "^3.3.0",
     "pg": "^8.2.1",
     "supertest": "^6.0.1"
+  },
+  "devDependencies": {
+    "jest-github-actions-reporter": "^1.0.2"
   }
 }

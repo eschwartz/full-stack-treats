@@ -1,10 +1,7 @@
 {
   "reporters": [
     "default",
-    ["./node_modules/jest-html-reporter", {
-      "pageTitle": "Test Results",
-      "includeFailureMsg": true
-    }]
+    "jest-github-actions-reporter"
   ],
-  "setupFilesAfterEnv": ["jest-expect-message"]
+  "testLocationInResults": true
 }
