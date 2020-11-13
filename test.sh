@@ -18,9 +18,11 @@ TEST_DB=${testDb} \
     --reporters=default --reporters=jest-github-actions-reporter
 echo "Tests complete."
 
-if [[ -n "$CI" ]]; then
+echo "CI? $CI";
+
+#if [[ -n "$CI" ]]; then
   echo "::debug::All tests passed! Great work!"
-fi
+#fi
 
 echo "Dropping DB ${testDb}..."
 dropdb ${testDb}
