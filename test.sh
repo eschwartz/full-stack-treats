@@ -21,7 +21,7 @@ echo "Tests complete."
 echo "CI? $CI";
 
 #if [[ -n "$CI" ]]; then
-  echo "::debug::All tests passed! Great work!"
+  echo "::warning::All tests passed! Great work!"
 #fi
 
 echo "Dropping DB ${testDb}..."
