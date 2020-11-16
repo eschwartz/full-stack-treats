@@ -26,6 +26,21 @@ router.post('/', (req, res) => {
 });
 
 // PUT /treats/<id>
+router.put('/:id', async (req, res) => {
+    try {
+        await pool.query(`
+            UPDATE "treats"
+            SET name=$1, description=$2, pic=$3
+            WHERE id=$4
+        `, [req.body.name, req.body.description, req.body.pic, req.params.id]);
+
+        res.send(200);
+    }
+    catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+});
 
 // DELETE /treats/<id>
 router.delete('/:id', (req, res) => {
