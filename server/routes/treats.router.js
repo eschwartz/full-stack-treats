@@ -3,14 +3,31 @@ const pool = require('../modules/pool');
 
 
 // GET /treats
-router.get('/', (req, res) => {
-    let queryText = `SELECT * FROM treats;`;
-    pool.query(queryText).then((results) => {
+router.get('/', async (req, res) => {
+    try {
+        if (req.query.q) {
+            let results = await pool.query(`
+                SELECT * FROM treats
+                WHERE name LIKE $1 OR description LIKE $1;
+            `, [`%${req.query.q}%`]);
+            
+            if (!results.rows.length) {
+                res.sendStatus(404);
+                return;
+            }
+            res.send(results.rows[0]);
+            return;
+        }
+
+        let queryText = `SELECT * FROM treats;`;
+        let results = await pool.query(queryText);
+        
         res.send(results.rows);
-    }).catch((error) => {
-        console.log(error);
+    }
+    catch (err) {
+        console.error(err);
         res.sendStatus(500);
-    })
+    }
 });
 
 // POST /treats

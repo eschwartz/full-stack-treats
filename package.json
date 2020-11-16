@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/server.js",
     "test": "TEST_NAME_PATTERN='^((?!STRETCH).)*$' ./test.sh",
-    "test-stretch": "TEST_NAME_PATTERN='STRETCH' ./test.sh"
+    "test-stretch": "TEST_NAME_PATTERN='STRETCH' ./test.sh",
+    "test-all": "./test.sh"
   },
   "author": "instructors@primeacademy.io",
   "license": "ISC",
