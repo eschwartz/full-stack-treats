@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -o pipefail
 
 
 timestamp=$(date +%s)
@@ -20,9 +20,10 @@ echo "Running tests...."
 
 # https://github.com/cschleiden/jest-github-actions-reporter
 
-ghaReporterFlag='';
+reportersFlag=''
 if [[ -n "${CI}" ]]; then
-  ghaReporterFlag="--reporters=jest-github-actions-reporter"
+  set -e
+  reportersFlag="--reporters=jest-github-actions-reporter"
 fi
 
 TEST_DB=${testDb} \
@@ -30,14 +31,15 @@ TEST_DB=${testDb} \
     --forceExit \
     --runInBand \
     --testTimeout=8000 \
-    --reporters=default ${ghaReporterFlag}
+    ${reportersFlag}
 echo "Tests complete."
 
-echo "CI? $CI";
 
-#if [[ -n "$CI" ]]; then
+if [[ -n "$CI" ]]; then
   echo "::warning::All tests passed! Great work!"
-#fi
+else
+  open ./test-report.html
+fi
 
 
 echo "Testing complete!"
