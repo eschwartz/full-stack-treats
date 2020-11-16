@@ -3,4 +3,3 @@ node_modules
 clientapp.js
 *.log
 test-report.html
-junit.xml

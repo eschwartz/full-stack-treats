@@ -23,7 +23,7 @@ echo "Running tests...."
 reportersFlag=''
 if [[ -n "${CI}" ]]; then
   set -e
-  reportersFlag="--reporters=jest-github-actions-reporter --reporters=jest-junit"
+  reportersFlag="--reporters=jest-github-actions-reporter"
 fi
 
 TEST_DB=${testDb} \
