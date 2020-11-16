@@ -5,16 +5,22 @@
   "main": "server.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "./test.sh"
+    "test": "./test.sh",
+    "test-prettier": "jest --preset=jest-runner-prettier"
   },
   "author": "instructors@primeacademy.io",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "jest": "^26.6.3",
     "jest-expect-message": "^1.0.2",
     "jest-html-reporter": "^3.3.0",
     "pg": "^8.2.1",
     "supertest": "^6.0.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "jest-github-actions-reporter": "^1.0.2",
+    "jest-runner-prettier": "^0.3.6",
+    "prettier": "^2.1.2"
   }
 }

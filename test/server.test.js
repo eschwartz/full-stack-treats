@@ -15,8 +15,12 @@ beforeAll(async() => {
   const sql = fs.readFileSync(sqlPath, 'utf8');
 
   // Update the app's pool, to connect to our test database
-  pool.options.host = 'localhost';
+  pool.options.host = process.env.PGHOST || 'localhost';
+  // pool.options.user = process.env.PGUSER || undefined;
+  // pool.options.password = process.env.PGPASSWORD || undefined;
+  // pool.options.port = process.env.PGPORT || undefined;
   pool.options.database = process.env.TEST_DB;
+  console.log('pool options', pool.options);
   pool.connect();
   await pool.query(sql);
   console.log(`Executing treats.sql.... done.`);
@@ -53,6 +57,32 @@ describe('GET /treats', () => {
 
 });
 
+describe('PUT /treats', () => {
+
+  it('should update a treat in the database', async() => {
+    let putRes = await agent.put('/treats/1')
+      .send({
+          name: 'Bowl Cake', 
+          description: 'Like a cupcake, but bowl-sized!', 
+          pic: '/assets/cupcake.jpg'
+      });
+
+    expect(putRes.statusCode, 'PUT /treats should return a 200').toBe(200);
+
+    // Check the DB, that our record was updated
+    let dbRes = await pool.query(`
+      SELECT * FROM "treats"
+      WHERE id=1
+    `);
+    expect(dbRes.rows[0], 'should update the data in the DB').toMatchObject({
+      name: 'Bowl Cake', 
+      description: 'Like a cupcake, but bowl-sized!', 
+      pic: '/assets/cupcake.jpg' 
+    });
+  });
+
+});
+
 
 describe('POST /treats', () => {
 
@@ -76,7 +106,7 @@ describe('POST /treats', () => {
       name: 'Potato', 
       description: 'Everyone loves a good potato',
       pic: '/assets/potato.jpg' 
-    })
+    });
   });
 
 });
