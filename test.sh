@@ -26,6 +26,17 @@ if [[ -n "${CI}" ]]; then
   reportersFlag="--reporters=jest-github-actions-reporter"
 fi
 
+# Accept TEST_NAME_PATTERN env var
+# eg. we can use this to only match Stretch goal tests
+# with TEST_NAME_PATTERN="STRETCH"
+# ...or to ignore STRETCH goals
+# with TEST_NAME_PATTERN='^((?!STRETCH).)*$'
+# see https://jestjs.io/docs/en/cli#--testnamepatternregex
+testNamePatternFlag=''
+if [[ -n "${TEST_NAME_PATTERN}" ]]; then
+  testNamePatternFlag="--testNamePattern=${TEST_NAME_PATTERN}"
+fi
+
 # Run the rest tests
 echo "Running tests...."
 TEST_DB=${testDb} \
@@ -33,7 +44,8 @@ TEST_DB=${testDb} \
     --forceExit \
     --runInBand \
     --testTimeout=8000 \
-    ${reportersFlag}
+    ${reportersFlag} \
+    ${testNamePatternFlag}
 echo "Tests complete."
 
 # If we're running from Github Actions, show a "All tested passed!"

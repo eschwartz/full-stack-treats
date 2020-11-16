@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "./test.sh",
-    "test-prettier": "jest --preset=jest-runner-prettier"
+    "test": "TEST_NAME_PATTERN='^((?!STRETCH).)*$' ./test.sh",
+    "test-stretch": "TEST_NAME_PATTERN='STRETCH' ./test.sh"
   },
   "author": "instructors@primeacademy.io",
   "license": "ISC",

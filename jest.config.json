@@ -3,7 +3,8 @@
     "default",
     ["jest-html-reporter", {
       "pageTitle": "Test Results",
-      "includeFailureMsg": true
+      "includeFailureMsg": true,
+      "statusIgnoreFilter": "pending"
     }]
   ],
   "testLocationInResults": true,

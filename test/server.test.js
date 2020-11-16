@@ -52,6 +52,31 @@ describe('GET /treats', () => {
         pic: '/assets/donuts.jpg',
       }
     ]);
+
+  });
+
+  it('[STRETCH] should find treats that match a query parameter', async() => {
+    let res = await agent.get('/treats')
+      .query({ q: 'donut' });
+
+    expect(res.statusCode, 'GET /treats?q=donut should return a 200').toBe(200);
+
+    // Allow students to send back either an array, or a single object
+    let data = Array.isArray(res.body) ? res.body[0] : res.body;
+
+    // If they send back an array, should only contain a single record
+    if (Array.isArray(res.body)) {
+      expect(res.body.length, 'GET /treats?q=donut should return a single record')
+        .toBe(1);
+    }
+
+    expect(data, 'GET /treats?q=donut should return a matching treat')
+      .toMatchObject({
+        id: 2,
+        name: 'Donuts', 
+        description: 'Mmmm donuts', 
+        pic: '/assets/donuts.jpg',
+      });
   });
 
 
