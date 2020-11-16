@@ -17,6 +17,10 @@ trap dropTestDb EXIT
 echo "Creating DB ${testDb}..."
 createdb ${testDb}
 
+echo "Running treats.sql..."
+psql -d ${testDb} -f ./treats.sql
+
+
 # If we're running from Github Actions, use the github-actions-reporter
 # so we can see test results in the workflow annotations
 # https://github.com/cschleiden/jest-github-actions-reporter

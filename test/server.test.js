@@ -9,24 +9,13 @@ let agent;
 
 
 beforeAll(async() => {
-  // Execute the treats.sql file, to initialize the database
-  console.log(`Executing treats.sql....`);
-  const sqlPath = path.join(__dirname, '..', 'treats.sql');
-  const sql = fs.readFileSync(sqlPath, 'utf8');
-
   // Update the app's pool, to connect to our test database
   pool.options.host = process.env.PGHOST || 'localhost';
-  // pool.options.user = process.env.PGUSER || undefined;
-  // pool.options.password = process.env.PGPASSWORD || undefined;
-  // pool.options.port = process.env.PGPORT || undefined;
   pool.options.database = process.env.TEST_DB;
-  console.log('pool options', pool.options);
   pool.connect();
-  await pool.query(sql);
-  console.log(`Executing treats.sql.... done.`);
 
 
-  // test the GET endpoint
+  // Set the supertest agent
   agent = supertest.agent(app)
     // Send data as application/x-www-form-urlencoded 
     // instead of default JSON
