@@ -6,6 +6,7 @@ const supertest = require('supertest');
 const app = require('../server/server');
 
 let agent;
+let querySpy;
 
 
 beforeAll(async() => {
@@ -14,9 +15,12 @@ beforeAll(async() => {
   pool.options.database = process.env.TEST_DB;
   pool.connect();
 
+  // Spy on pool.query
+  querySpy = jest.spyOn(pool, 'query');
 
   // Set the supertest agent
   agent = supertest.agent(app)
+    .timeout(500)
     // Send data as application/x-www-form-urlencoded 
     // instead of default JSON
     .type('form');
@@ -76,9 +80,11 @@ describe('PUT /treats', () => {
   it('should update a treat in the database', async() => {
     let putRes = await agent.put('/treats/1')
       .send({
-          name: 'Bowl Cake', 
+          // NOTE: README says PUT only needs to update description, 
+          // even though app supports name+pic
           description: 'Like a cupcake, but bowl-sized!', 
-          pic: '/assets/cupcake.jpg'
+          // name: 'Bowl Cake', 
+          // pic: '/assets/cupcake.jpg'
       });
 
     expect(putRes.statusCode, 'PUT /treats should return a 200').toBe(200);
@@ -89,9 +95,9 @@ describe('PUT /treats', () => {
       WHERE id=1
     `);
     expect(dbRes.rows[0], 'should update the data in the DB').toMatchObject({
-      name: 'Bowl Cake', 
       description: 'Like a cupcake, but bowl-sized!', 
-      pic: '/assets/cupcake.jpg' 
+      // name: 'Bowl Cake', 
+      // pic: '/assets/cupcake.jpg' 
     });
   });
 
@@ -131,12 +137,23 @@ describe('DELETE /treats/:id', () => {
     let res = await agent.delete('/treats/1');
     expect(res.statusCode, 'should return a 200 response code').toBe(200);
 
+
     // Look for treat 1 in the DB
     let dbRes = await pool.query(`
       SELECT * FROM treats
       WHERE id = 1
     `);
     expect(dbRes.rows.length, 'record should not be in the database').toBe(0);
+
+  });
+
+  it('should use SQL prepared statements', async() => {
+    await agent.delete('/treats/1');
+
+    // Inspect the last call to `pool.query`
+    let queryCall = querySpy.mock.calls[querySpy.mock.calls.length-1];
+
+    expect(queryCall[1], 'should pass in the treat ID as a SQL parameter').toEqual([1]);
   });
 
 });
