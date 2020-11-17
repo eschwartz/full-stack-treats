@@ -1,0 +1,9 @@
+set -eu
+
+git remote remove student || true
+git remote add student $1
+git fetch student
+git checkout student/master server
+echo "\n\nmodule.exports = app;" >> ./server/server.js
+
+npm run test-all
