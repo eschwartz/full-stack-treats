@@ -47,7 +47,7 @@ TEST_DB=${testDb} \
   ./node_modules/.bin/jest \
     --forceExit \
     --runInBand \
-    --testTimeout=8000 \
+    --testTimeout=1000 \
     ${reportersFlag} \
     ${testNamePatternFlag}
 echo "Tests complete."
