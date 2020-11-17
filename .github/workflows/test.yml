@@ -29,13 +29,6 @@
 
 
         steps:
-          - name: createdb test
-            run: createdb testtesttest
-            env:
-              PGHOST: localhost
-              PGPORT: 5432
-              PGUSER: postgres
-              PGPASSWORD: postgres
           - name: Checkout repo code
             uses: actions/checkout@v2
           - name: Install dependencies
@@ -47,6 +40,3 @@
               PGPORT: 5432
               PGUSER: postgres
               PGPASSWORD: postgres
-          # - run: npm run test-prettier
-          #   env:
-          #     CI: true
